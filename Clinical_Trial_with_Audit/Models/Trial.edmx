@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PPDModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AuditType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Reg_No" Type="int" Nullable="false" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="column_name" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_Audit_Register_user">
+          <Key>
+            <PropertyRef Name="Audit_No" />
+          </Key>
+          <Property Name="Audit_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Reg_No" Type="int" Nullable="false" />
+          <Property Name="Trial_No" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="varchar(max)" />
+          <Property Name="Registration_date" Type="date" />
+          <Property Name="Approve_Status" Type="varchar(max)" />
+          <Property Name="operation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="audit_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tbl_Audit_user_Registration">
+          <Key>
+            <PropertyRef Name="Audit_No" />
+          </Key>
+          <Property Name="Audit_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Reg_No" Type="int" Nullable="false" />
+          <Property Name="Trial_No" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="varchar(max)" />
+          <Property Name="Registration_date" Type="date" />
+          <Property Name="Approve_Status" Type="varchar(max)" />
+          <Property Name="operation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="varchar(max)" Nullable="false" />
+          <Property Name="audit_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tbl_Clinical_Trials">
+          <Key>
+            <PropertyRef Name="Trial_No" />
+          </Key>
+          <Property Name="Trial_No" Type="int" Nullable="false" />
+          <Property Name="Project_Name" Type="varchar(max)" />
+          <Property Name="Project_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Start_Date" Type="date" />
+          <Property Name="End_Date" Type="date" />
+          <Property Name="Trial_Type_No" Type="int" />
+          <Property Name="Owned_by" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Register_user">
+          <Key>
+            <PropertyRef Name="Reg_No" />
+          </Key>
+          <Property Name="Reg_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Trial_No" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="varchar(max)" />
+          <Property Name="Dob" Type="date" />
+          <Property Name="Mob" Type="varchar(max)" />
+          <Property Name="Address1" Type="varchar(max)" />
+          <Property Name="Existing_Condition" Type="varchar(max)" />
+          <Property Name="Registration_date" Type="date" />
+          <Property Name="Approve_Status" Type="varchar(max)" />
+          <Property Name="Is_Active" Type="int" />
+        </EntityType>
+        <EntityType Name="Tbl_Trial_Type">
+          <Key>
+            <PropertyRef Name="Trial_Type_No" />
+          </Key>
+          <Property Name="Trial_Type_No" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Trial_Type" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_User">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="Userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar(max)" Nullable="false" />
+          <Property Name="role" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_User_Registration">
+          <Key>
+            <PropertyRef Name="Reg_No" />
+          </Key>
+          <Property Name="Reg_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Trial_No" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="varchar(max)" />
+          <Property Name="Dob" Type="date" />
+          <Property Name="Mob" Type="varchar(max)" />
+          <Property Name="Address1" Type="varchar(max)" />
+          <Property Name="Existing_Condition" Type="varchar(max)" />
+          <Property Name="Registration_date" Type="datetime" />
+          <Property Name="Approve_Status" Type="varchar(max)" />
+          <Property Name="Is_Active" Type="int" />
+        </EntityType>
+        <Association Name="FK__AuditLog__Reg_No__756D6ECB">
+          <End Role="Tbl_User_Registration" Type="Self.Tbl_User_Registration" Multiplicity="1" />
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User_Registration">
+              <PropertyRef Name="Reg_No" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="Reg_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Clini__Trial__44FF419A">
+          <End Role="Tbl_Trial_Type" Type="Self.Tbl_Trial_Type" Multiplicity="0..1" />
+          <End Role="Tbl_Clinical_Trials" Type="Self.Tbl_Clinical_Trials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Trial_Type">
+              <PropertyRef Name="Trial_Type_No" />
+            </Principal>
+            <Dependent Role="Tbl_Clinical_Trials">
+              <PropertyRef Name="Trial_Type_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Regis__Trial__03F0984C">
+          <End Role="Tbl_Clinical_Trials" Type="Self.Tbl_Clinical_Trials" Multiplicity="1" />
+          <End Role="Tbl_Register_user" Type="Self.Tbl_Register_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Clinical_Trials">
+              <PropertyRef Name="Trial_No" />
+            </Principal>
+            <Dependent Role="Tbl_Register_user">
+              <PropertyRef Name="Trial_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_User___Trial__17F790F9">
+          <End Role="Tbl_Clinical_Trials" Type="Self.Tbl_Clinical_Trials" Multiplicity="1" />
+          <End Role="Tbl_User_Registration" Type="Self.Tbl_User_Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Clinical_Trials">
+              <PropertyRef Name="Trial_No" />
+            </Principal>
+            <Dependent Role="Tbl_User_Registration">
+              <PropertyRef Name="Trial_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PPDModel2StoreContainer">
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Audit_Register_user" EntityType="Self.Tbl_Audit_Register_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Audit_user_Registration" EntityType="Self.Tbl_Audit_user_Registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Clinical_Trials" EntityType="Self.Tbl_Clinical_Trials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Register_user" EntityType="Self.Tbl_Register_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Trial_Type" EntityType="Self.Tbl_Trial_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_User_Registration" EntityType="Self.Tbl_User_Registration" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AuditLog__Reg_No__756D6ECB" Association="Self.FK__AuditLog__Reg_No__756D6ECB">
+            <End Role="Tbl_User_Registration" EntitySet="Tbl_User_Registration" />
+            <End Role="AuditLog" EntitySet="AuditLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Clini__Trial__44FF419A" Association="Self.FK__Tbl_Clini__Trial__44FF419A">
+            <End Role="Tbl_Trial_Type" EntitySet="Tbl_Trial_Type" />
+            <End Role="Tbl_Clinical_Trials" EntitySet="Tbl_Clinical_Trials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Regis__Trial__03F0984C" Association="Self.FK__Tbl_Regis__Trial__03F0984C">
+            <End Role="Tbl_Clinical_Trials" EntitySet="Tbl_Clinical_Trials" />
+            <End Role="Tbl_Register_user" EntitySet="Tbl_Register_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_User___Trial__17F790F9" Association="Self.FK__Tbl_User___Trial__17F790F9">
+            <End Role="Tbl_Clinical_Trials" EntitySet="Tbl_Clinical_Trials" />
+            <End Role="Tbl_User_Registration" EntitySet="Tbl_User_Registration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PPDModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AuditType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Reg_No" Type="Int32" Nullable="false" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tbl_User_Registration" Relationship="PPDModel2.FK__AuditLog__Reg_No__756D6ECB" FromRole="AuditLog" ToRole="Tbl_User_Registration" />
+          <Property Name="column_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Audit_Register_user">
+          <Key>
+            <PropertyRef Name="Audit_No" />
+          </Key>
+          <Property Name="Audit_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reg_No" Type="Int32" Nullable="false" />
+          <Property Name="Trial_No" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_date" Type="DateTime" Precision="0" />
+          <Property Name="Approve_Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="operation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="audit_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tbl_Audit_user_Registration">
+          <Key>
+            <PropertyRef Name="Audit_No" />
+          </Key>
+          <Property Name="Audit_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reg_No" Type="Int32" Nullable="false" />
+          <Property Name="Trial_No" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_date" Type="DateTime" Precision="0" />
+          <Property Name="Approve_Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="operation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="audit_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tbl_Clinical_Trials">
+          <Key>
+            <PropertyRef Name="Trial_No" />
+          </Key>
+          <Property Name="Trial_No" Type="Int32" Nullable="false" />
+          <Property Name="Project_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Start_Date" Type="DateTime" Precision="0" />
+          <Property Name="End_Date" Type="DateTime" Precision="0" />
+          <Property Name="Trial_Type_No" Type="Int32" />
+          <Property Name="Owned_by" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tbl_Trial_Type" Relationship="Self.FK__Tbl_Clini__Trial__44FF419A" FromRole="Tbl_Clinical_Trials" ToRole="Tbl_Trial_Type" />
+          <NavigationProperty Name="Tbl_Register_user" Relationship="Self.FK__Tbl_Regis__Trial__03F0984C" FromRole="Tbl_Clinical_Trials" ToRole="Tbl_Register_user" />
+          <NavigationProperty Name="Tbl_User_Registration" Relationship="Self.FK__Tbl_User___Trial__17F790F9" FromRole="Tbl_Clinical_Trials" ToRole="Tbl_User_Registration" />
+        </EntityType>
+        <EntityType Name="Tbl_Register_user">
+          <Key>
+            <PropertyRef Name="Reg_No" />
+          </Key>
+          <Property Name="Reg_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Trial_No" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Dob" Type="DateTime" Precision="0" />
+          <Property Name="Mob" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Existing_Condition" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_date" Type="DateTime" Precision="0" />
+          <Property Name="Approve_Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Is_Active" Type="Int32" />
+          <NavigationProperty Name="Tbl_Clinical_Trials" Relationship="Self.FK__Tbl_Regis__Trial__03F0984C" FromRole="Tbl_Register_user" ToRole="Tbl_Clinical_Trials" />
+        </EntityType>
+        <EntityType Name="Tbl_Trial_Type">
+          <Key>
+            <PropertyRef Name="Trial_Type_No" />
+          </Key>
+          <Property Name="Trial_Type_No" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Trial_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Clinical_Trials" Relationship="Self.FK__Tbl_Clini__Trial__44FF419A" FromRole="Tbl_Trial_Type" ToRole="Tbl_Clinical_Trials" />
+        </EntityType>
+        <EntityType Name="Tbl_User">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="Userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_User_Registration">
+          <Key>
+            <PropertyRef Name="Reg_No" />
+          </Key>
+          <Property Name="Reg_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Trial_No" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Dob" Type="DateTime" Precision="0" />
+          <Property Name="Mob" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Existing_Condition" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_date" Type="DateTime" Precision="3" />
+          <Property Name="Approve_Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Is_Active" Type="Int32" />
+          <NavigationProperty Name="Tbl_Clinical_Trials" Relationship="Self.FK__Tbl_User___Trial__17F790F9" FromRole="Tbl_User_Registration" ToRole="Tbl_Clinical_Trials" />
+          <NavigationProperty Name="AuditLogs" Relationship="PPDModel2.FK__AuditLog__Reg_No__756D6ECB" FromRole="Tbl_User_Registration" ToRole="AuditLog" />
+        </EntityType>
+        <Association Name="FK__Tbl_Clini__Trial__44FF419A">
+          <End Role="Tbl_Trial_Type" Type="Self.Tbl_Trial_Type" Multiplicity="0..1" />
+          <End Role="Tbl_Clinical_Trials" Type="Self.Tbl_Clinical_Trials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Trial_Type">
+              <PropertyRef Name="Trial_Type_No" />
+            </Principal>
+            <Dependent Role="Tbl_Clinical_Trials">
+              <PropertyRef Name="Trial_Type_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Regis__Trial__03F0984C">
+          <End Role="Tbl_Clinical_Trials" Type="Self.Tbl_Clinical_Trials" Multiplicity="1" />
+          <End Role="Tbl_Register_user" Type="Self.Tbl_Register_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Clinical_Trials">
+              <PropertyRef Name="Trial_No" />
+            </Principal>
+            <Dependent Role="Tbl_Register_user">
+              <PropertyRef Name="Trial_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_User___Trial__17F790F9">
+          <End Role="Tbl_Clinical_Trials" Type="Self.Tbl_Clinical_Trials" Multiplicity="1" />
+          <End Role="Tbl_User_Registration" Type="Self.Tbl_User_Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Clinical_Trials">
+              <PropertyRef Name="Trial_No" />
+            </Principal>
+            <Dependent Role="Tbl_User_Registration">
+              <PropertyRef Name="Trial_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Trial_Context" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuditLogs" EntityType="Self.AuditLog" />
+          <EntitySet Name="Tbl_Audit_Register_user" EntityType="Self.Tbl_Audit_Register_user" />
+          <EntitySet Name="Tbl_Audit_user_Registration" EntityType="Self.Tbl_Audit_user_Registration" />
+          <EntitySet Name="Tbl_Clinical_Trials" EntityType="Self.Tbl_Clinical_Trials" />
+          <EntitySet Name="Tbl_Register_user" EntityType="Self.Tbl_Register_user" />
+          <EntitySet Name="Tbl_Trial_Type" EntityType="Self.Tbl_Trial_Type" />
+          <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" />
+          <EntitySet Name="Tbl_User_Registration" EntityType="Self.Tbl_User_Registration" />
+          <AssociationSet Name="FK__Tbl_Clini__Trial__44FF419A" Association="Self.FK__Tbl_Clini__Trial__44FF419A">
+            <End Role="Tbl_Trial_Type" EntitySet="Tbl_Trial_Type" />
+            <End Role="Tbl_Clinical_Trials" EntitySet="Tbl_Clinical_Trials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Regis__Trial__03F0984C" Association="Self.FK__Tbl_Regis__Trial__03F0984C">
+            <End Role="Tbl_Clinical_Trials" EntitySet="Tbl_Clinical_Trials" />
+            <End Role="Tbl_Register_user" EntitySet="Tbl_Register_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_User___Trial__17F790F9" Association="Self.FK__Tbl_User___Trial__17F790F9">
+            <End Role="Tbl_Clinical_Trials" EntitySet="Tbl_Clinical_Trials" />
+            <End Role="Tbl_User_Registration" EntitySet="Tbl_User_Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AuditLog__Reg_No__756D6ECB" Association="PPDModel2.FK__AuditLog__Reg_No__756D6ECB">
+            <End Role="Tbl_User_Registration" EntitySet="Tbl_User_Registration" />
+            <End Role="AuditLog" EntitySet="AuditLogs" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK__AuditLog__Reg_No__756D6ECB">
+          <End Type="PPDModel2.Tbl_User_Registration" Role="Tbl_User_Registration" Multiplicity="1" />
+          <End Type="PPDModel2.AuditLog" Role="AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User_Registration">
+              <PropertyRef Name="Reg_No" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="Reg_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PPDModel2StoreContainer" CdmEntityContainer="Trial_Context">
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="PPDModel2.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="column_name" ColumnName="column_name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AuditType" ColumnName="AuditType" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Reg_No" ColumnName="Reg_No" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Audit_Register_user">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_Audit_Register_user">
+              <MappingFragment StoreEntitySet="Tbl_Audit_Register_user">
+                <ScalarProperty Name="Audit_No" ColumnName="Audit_No" />
+                <ScalarProperty Name="Reg_No" ColumnName="Reg_No" />
+                <ScalarProperty Name="Trial_No" ColumnName="Trial_No" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+                <ScalarProperty Name="Approve_Status" ColumnName="Approve_Status" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+                <ScalarProperty Name="audit_date" ColumnName="audit_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Audit_user_Registration">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_Audit_user_Registration">
+              <MappingFragment StoreEntitySet="Tbl_Audit_user_Registration">
+                <ScalarProperty Name="Audit_No" ColumnName="Audit_No" />
+                <ScalarProperty Name="Reg_No" ColumnName="Reg_No" />
+                <ScalarProperty Name="Trial_No" ColumnName="Trial_No" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+                <ScalarProperty Name="Approve_Status" ColumnName="Approve_Status" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="audit_date" ColumnName="audit_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Clinical_Trials">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_Clinical_Trials">
+              <MappingFragment StoreEntitySet="Tbl_Clinical_Trials">
+                <ScalarProperty Name="Trial_No" ColumnName="Trial_No" />
+                <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+                <ScalarProperty Name="Project_Code" ColumnName="Project_Code" />
+                <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+                <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+                <ScalarProperty Name="Trial_Type_No" ColumnName="Trial_Type_No" />
+                <ScalarProperty Name="Owned_by" ColumnName="Owned_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Register_user">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_Register_user">
+              <MappingFragment StoreEntitySet="Tbl_Register_user">
+                <ScalarProperty Name="Reg_No" ColumnName="Reg_No" />
+                <ScalarProperty Name="Trial_No" ColumnName="Trial_No" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="Mob" ColumnName="Mob" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Existing_Condition" ColumnName="Existing_Condition" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+                <ScalarProperty Name="Approve_Status" ColumnName="Approve_Status" />
+                <ScalarProperty Name="Is_Active" ColumnName="Is_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Trial_Type">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_Trial_Type">
+              <MappingFragment StoreEntitySet="Tbl_Trial_Type">
+                <ScalarProperty Name="Trial_Type_No" ColumnName="Trial_Type_No" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Trial_Type" ColumnName="Trial_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_User">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_User">
+              <MappingFragment StoreEntitySet="Tbl_User">
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_User_Registration">
+            <EntityTypeMapping TypeName="PPDModel2.Tbl_User_Registration">
+              <MappingFragment StoreEntitySet="Tbl_User_Registration">
+                <ScalarProperty Name="Reg_No" ColumnName="Reg_No" />
+                <ScalarProperty Name="Trial_No" ColumnName="Trial_No" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="Mob" ColumnName="Mob" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Existing_Condition" ColumnName="Existing_Condition" />
+                <ScalarProperty Name="Registration_date" ColumnName="Registration_date" />
+                <ScalarProperty Name="Approve_Status" ColumnName="Approve_Status" />
+                <ScalarProperty Name="Is_Active" ColumnName="Is_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

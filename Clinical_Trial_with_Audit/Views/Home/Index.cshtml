@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/StyleSheet12.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<script>
+            $(document).ready(function () {
+             debugger;
+            $("#btnRedirect").click(function(){
+            window.location.href = "@Url.Action("GetAllTrials", "Home")";
+
+        });
+            });
+
+</script>
+<body>
+
+    <div class="Moto">
+        <span style="color:#81d742">Helping</span>
+        <br />
+        <span style="color:#ffffff">Deliver</span>
+        <br />
+        <span style="color:#81d742">Life</span>
+        <br />
+        <span style="color:#c9c9c9">Changing</span>
+        <br />
+        <span style="color:#c9c9c9">therapies</span>
+
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 class="who">WHO WE ARE</h1>
+                <h4 class="subtext">
+                    At PPD, our purpose is to improve health, our mission is to help our customers deliver life-changing therapies and our strategy is to bend the cost and time curve of drug development and optimize value.
+
+                </h4>
+            </div>
+            <div class="col-sm-8">
+                <h1 class="who">PARTICIPATE IN CLINICAL TRIALS WITH PPD</h1>
+                <p class="subtext">
+                    Every medical advance starts with a clinical trial. It’s the most important step in confirming whether a new drug or treatment is safe and effective in people. PPD advances new treatment
+                    options by conducting clinical trials – also known as research
+                    studies – for a wide range of medical conditions.
+                </p>
+                <br />
+                <p class="subtext">
+                    You can be a part of medicine’s future by participating in a trial – either as a healthy volunteer or a patient who is seeking options that aren’t available from your regular doctor. Trial
+                    volunteers receive compensation for their time as well as study medication and study-related care at no cost.
+                </p>
+                <button id="btnRedirect" class="btn btn-success">Get All Trials Details</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-grey">
+        <div class="row">
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-globe logo"></span>
+            </div>
+            <div class="col-sm-8">
+                <h2>Our Values</h2>
+                <h4><strong>MISSION:</strong> Our mission lorem ipsum..</h4>
+                <p>At PPD, our purpose is to improve health, our mission is to help our customers deliver life-changing therapies and our strategy is to bend the cost and time curve of drug development and optimize value.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+
