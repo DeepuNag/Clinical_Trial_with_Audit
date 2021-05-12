@@ -60,8 +60,9 @@ namespace Clinical_Trial_with_Audit.Models
             {
                 var newValues = new StringBuilder();
                 SetAddedProperties(dbEntry, newValues);
-                foreach (var propertyName in dbEntry.CurrentValues.PropertyNames)
-                {
+                var Column = new StringBuilder();
+                GetAddedProperty(dbEntry, Column);
+                
                     result.Add(new AuditLog()
                     {
 
@@ -74,11 +75,11 @@ namespace Clinical_Trial_with_Audit.Models
                         NewValue = newValues.ToString(),
                         Date = DateTime.Now,
                         UserName = guid,
-                        column_name = propertyName
+                        column_name ="All Columns"
 
                     }
                     );
-                }
+                
             }
             else if (dbEntry.State == EntityState.Deleted)
             {
@@ -126,7 +127,7 @@ namespace Clinical_Trial_with_Audit.Models
                             NewValue = Convert.ToString(currentValue),
                             Date = DateTime.Now,
                             UserName = guid,
-                            column_name=propertyName
+                            column_name= propertyName
                         }
                             );
                     }
@@ -134,6 +135,19 @@ namespace Clinical_Trial_with_Audit.Models
             }
 
             return result;
+        }
+        private void GetAddedProperty(DbEntityEntry entry, StringBuilder Column)
+        {
+            foreach (var propertyName in entry.CurrentValues.PropertyNames)
+            {
+                var newVal = entry.CurrentValues[propertyName];
+                if (newVal != null)
+                {
+                    Column.AppendFormat("{0}||", propertyName);
+                }
+            }
+            if (Column.Length > 0)
+                Column = Column.Remove(Column.Length - 3, 3);
         }
         private void SetAddedProperties(DbEntityEntry entry, StringBuilder newData)
         {

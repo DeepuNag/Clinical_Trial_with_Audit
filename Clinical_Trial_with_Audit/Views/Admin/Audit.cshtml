@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Clinical_Trial_with_Audit.Models.AuditLog>
+
+@{
+    ViewBag.Title = "Audit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Audit</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AuditType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TableName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OldValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.column_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_User_Registration.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuditType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TableName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OldValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.column_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tbl_User_Registration.FullName)
+        </td>
+        
+    </tr>
+}
+
+</table>

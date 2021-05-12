@@ -12,44 +12,44 @@ using Clinical_Trial_with_Audit.Models;
 
 namespace Clinical_Trial_with_Audit.Controllers
 {
-    public class AuditController : ApiController
+    public class NewAudiApitController : ApiController
     {
-        private PPDEntities1 db = new PPDEntities1();
-        Trial_Context CTC = new Trial_Context();
-        // GET: api/Audit
-        public IQueryable<VW_Audit> GetVW_Audit()
+        private PPDEntities2 db = new PPDEntities2();
+
+        // GET: api/NewAudiApit
+        public IQueryable<VM_New_Audit> GetVM_New_Audit()
         {
-            return db.VW_Audit;
+            return db.VM_New_Audit;
         }
 
-        // GET: api/Audit/5
-        [ResponseType(typeof(AuditLog))]
-        public IHttpActionResult GetVW_Audit(int id)
+        // GET: api/NewAudiApit/5
+        [ResponseType(typeof(VM_New_Audit))]
+        public IHttpActionResult GetVM_New_Audit(int id)
         {
-            List<AuditLog> trial = CTC.AuditLogs.Where(x => x.Reg_No == id).ToList();
-            if (trial == null)
+            List<VM_New_Audit> vM_New_Audit = db.VM_New_Audit.Where(x => x.Reg_No==id).ToList();
+            if (vM_New_Audit == null)
             {
                 return NotFound();
             }
 
-            return Ok(trial);
+            return Ok(vM_New_Audit);
         }
 
-        // PUT: api/Audit/5
+        // PUT: api/NewAudiApit/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutVW_Audit(Guid id, VW_Audit vW_Audit)
+        public IHttpActionResult PutVM_New_Audit(Guid id, VM_New_Audit vM_New_Audit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != vW_Audit.Id)
+            if (id != vM_New_Audit.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(vW_Audit).State = EntityState.Modified;
+            db.Entry(vM_New_Audit).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Clinical_Trial_with_Audit.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VW_AuditExists(id))
+                if (!VM_New_AuditExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace Clinical_Trial_with_Audit.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Audit
-        [ResponseType(typeof(VW_Audit))]
-        public IHttpActionResult PostVW_Audit(VW_Audit vW_Audit)
+        // POST: api/NewAudiApit
+        [ResponseType(typeof(VM_New_Audit))]
+        public IHttpActionResult PostVM_New_Audit(VM_New_Audit vM_New_Audit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.VW_Audit.Add(vW_Audit);
+            db.VM_New_Audit.Add(vM_New_Audit);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Clinical_Trial_with_Audit.Controllers
             }
             catch (DbUpdateException)
             {
-                if (VW_AuditExists(vW_Audit.Id))
+                if (VM_New_AuditExists(vM_New_Audit.Id))
                 {
                     return Conflict();
                 }
@@ -97,23 +97,23 @@ namespace Clinical_Trial_with_Audit.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = vW_Audit.Id }, vW_Audit);
+            return CreatedAtRoute("DefaultApi", new { id = vM_New_Audit.Id }, vM_New_Audit);
         }
 
-        // DELETE: api/Audit/5
-        [ResponseType(typeof(VW_Audit))]
-        public IHttpActionResult DeleteVW_Audit(Guid id)
+        // DELETE: api/NewAudiApit/5
+        [ResponseType(typeof(VM_New_Audit))]
+        public IHttpActionResult DeleteVM_New_Audit(Guid id)
         {
-            VW_Audit vW_Audit = db.VW_Audit.Find(id);
-            if (vW_Audit == null)
+            VM_New_Audit vM_New_Audit = db.VM_New_Audit.Find(id);
+            if (vM_New_Audit == null)
             {
                 return NotFound();
             }
 
-            db.VW_Audit.Remove(vW_Audit);
+            db.VM_New_Audit.Remove(vM_New_Audit);
             db.SaveChanges();
 
-            return Ok(vW_Audit);
+            return Ok(vM_New_Audit);
         }
 
         protected override void Dispose(bool disposing)
@@ -125,9 +125,9 @@ namespace Clinical_Trial_with_Audit.Controllers
             base.Dispose(disposing);
         }
 
-        private bool VW_AuditExists(Guid id)
+        private bool VM_New_AuditExists(Guid id)
         {
-            return db.VW_Audit.Count(e => e.Id == id) > 0;
+            return db.VM_New_Audit.Count(e => e.Id == id) > 0;
         }
     }
 }

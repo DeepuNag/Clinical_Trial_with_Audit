@@ -61,5 +61,15 @@ namespace Clinical_Trial_with_Audit.Controllers
 
             return RedirectToAction("Index");
         }
+        public ActionResult Audit(int id)
+        {
+            List<AuditLog> auditLog = CTC.AuditLogs.Where(x => x.Reg_No == id).ToList();
+            if (auditLog == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(auditLog);
+
+        }
     }
 }

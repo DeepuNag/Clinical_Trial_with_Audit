@@ -15,14 +15,14 @@
             }
             $.ajax({
                 type: "GET",
-                url: "http://localhost:55994/api/Audit/" + id,
+                //url: "/Admin/Audit/" + id,
+                url: "http://localhost:55994/api/NewAudiApit/" +id,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     var item = JSON.stringify(result);
 
                     $.each(result, function (i, item) {
-                        //var Uname =@Session["Role"].ToString();
                         var rows = "<tr>"
                             + "<td class='th1'>" + item.Reg_No + "</td>"
                             + "<td class='th2'>" + item.AuditType + "</td>"
@@ -65,7 +65,7 @@
         width: 100%;
     }
   .modal-dialog {
-    width: 900px;
+    width: 1000px;
     margin: 30px auto;
    }
     .navbar-inverse {
