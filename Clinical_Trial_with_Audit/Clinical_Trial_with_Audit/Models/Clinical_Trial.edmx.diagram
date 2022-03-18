@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8dd6618c471c4f42bcc12b74e7f07aff" Name="Diagram1">
+        <EntityTypeShape EntityType="PPDModel.AuditLog" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_Audit_Register_user" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_Audit_user_Registration" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_Clinical_Trials" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_Register_user" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_Trial_Type" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPDModel.Tbl_User_Registration" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="PPDModel.FK__AuditLog__Reg_No__4F47C5E3" ManuallyRouted="false" />
+        <AssociationConnector Association="PPDModel.FK__Tbl_Clini__Trial__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="PPDModel.FK__Tbl_Regis__Trial__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="PPDModel.FK__Tbl_User___Trial__17F790F9" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

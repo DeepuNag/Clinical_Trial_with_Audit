@@ -1,0 +1,248 @@
+﻿@model IEnumerable<Clinical_Trial_with_Audit.Models.Tbl_User_Registration>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btnDisplay").click(function () {
+            var id = $(this).attr('data-id');
+            function formattedDateFromJson(date) {
+                return (moment(date).format("DD-MMM-YYYY HH:mm:ss"));
+            }
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:55994/api/AuditApi/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var item = JSON.stringify(result);
+
+                    $.each(result, function (i, item) {
+                        //var Uname =@Session["Role"].ToString();
+                        var rows = "<tr>"
+                            + "<td class='th1'>" + item.Reg_No + "</td>"
+                            + "<td class='th2'>" + item.FullName + "</td>"
+                            + "<td class='th3'>" + item.operation + "</td>"
+                            + "<td class='th4'>" + item.UserName+ "</td>"
+                            + "<td class='th5'>" + formattedDateFromJson(item.audit_date) + "</td>"
+                            + "</tr>";
+                        $('#tblaudit tbody').append(rows);
+                    });
+
+                    $("#MyPopup").modal("show");
+
+                },
+                error: function (response) {
+
+                    alert("Error");
+                }
+            });
+        });
+        $(".btnclose").click(function () {
+            $('#tblaudit tbody').empty();
+        });
+    });
+</script>
+<style>
+    body {
+        padding-top: 50px;
+        background-color: #34495e;
+    }
+
+    .hiddenRow {
+        padding: 0 !important;
+    }
+    /*media (min-width: 992px)*/
+    .col-md-12 {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .navbar-inverse {
+        background-color: #83c443;
+        border-color: #080808;
+    }
+
+    li {
+        margin-bottom: 4px;
+        text-align: center;
+    }
+
+    th {
+        color: darkblue;
+    }
+    input:hover {
+        background-color: red;
+    }
+
+    .show {
+        display: block;
+    }
+</style>
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="color:darkblue">
+                <strong> Registered Users</strong>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Mobile Number</th>
+                            <th>Address</th>
+                            <th>Registration Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{ var x = 0;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            x++;
+                            var name = "#" + x;
+                            var scr = "btn" + x;
+                            if (item.Is_Active == 1)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FullName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mob)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address1)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Registration_date)
+                                    </td>
+                                    <td id="approvestatus">
+
+                                        @Html.DisplayFor(modelItem => item.Approve_Status)
+
+                                    </td>
+
+
+                                    <td>
+                                        <button onclick=" $('@name').collapse('toggle')" class="btn btn-default"> View</button>
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-default">Action</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                @*<span class="sr-only">Action</span>*@
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                @if (item.Approve_Status == "Pending")
+                                                {
+                                                    <li>
+                                                        <input type="reset" style="width:50%;background-color:#401e6d;color:white" value="Reject" class="btn btn-danger" id="btnReject" onclick="location.href='@Url.Action("Reject", "Admin", new { id = item.Reg_No })'" />
+
+                                                    </li>
+
+                                                    <li>
+                                                        <input type="reset" style="width:50%;background-color:#401e6d;color:white" value="Approve" id="btnApprove" class="btn btn-success" onclick="location.href='@Url.Action("Approve", "Admin", new { id = item.Reg_No })'" />
+
+                                                    </li>
+
+                                                }
+                                                <li><input type="submit" style="width:50%;background-color:#401e6d;color:white" value="Audit" id="btnAudit" class="btn btn-default btnDisplay" data-id="@item.Reg_No" /></li>
+                                                <li> <input type="submit" style="width:50%;background-color:#401e6d;color:white" value="Delete" id="btnDelete" class="btn btn-default btnDelete" onclick="location.href='@Url.Action("Delete", "Admin", new { id = item.Reg_No })'" /></li>
+                                                @*<li><input type="reset" value="Audit" id="scr" class="btn btn-default" data-id="@item.Reg_No" onclick="location.href='@Url.Action("Audit_Log", "Test", new { id = item.Reg_No })'"/></li>*@
+                                            </ul>
+                                        </div>
+
+
+                                    </td>
+
+                                </tr>
+                                <tr class="collapse" id="@x">
+                                    <td colspan="12">
+                                        <div>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr class="info">
+                                                        <th>Condition</th>
+                                                        <th>Trial_No</th>
+                                                        <th>Date of Birth</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Existing_Condition)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Trial_No)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Dob)
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div id="MyPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" style="color:#401e6d">Audit Trail</h4>
+            </div>
+            <div class="modal-body">
+                <table id="tblaudit" class="table table-bordered table-striped table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th1" style="width:140px">Register Number</th>
+                            <th class="th2" style="width:100px">Full Name</th>
+                            <th class="th3" style="width:100px">Operation</th>
+                            <th class="th4" style="width:100px">User Name</th>
+                            <th class="th5" style="width:100px">Audit Date</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btnclose" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

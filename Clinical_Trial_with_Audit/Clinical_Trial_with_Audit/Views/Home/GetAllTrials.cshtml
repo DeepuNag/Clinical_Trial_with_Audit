@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Clinical_Trial_with_Audit.Models.VW_Trial>
+
+@{
+    ViewBag.Title = "GetAllTrials";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        padding-top: 50px;
+    }
+
+    .form-group {
+        margin-bottom: 50px;
+        width: 500px;
+        height: 50px;
+        margin-left: 350px;
+    }
+
+    .input-group {
+        position: relative;
+        display: table;
+        border-collapse: separate;
+        margin-top: 35px;
+    }
+
+    .hiddenRow {
+        padding: 0 !important;
+    }
+
+    .myfooter {
+        background-color: black;
+        color: white;
+        text-align: justify;
+        margin-top: 465px;
+        padding-top: 10px;
+    }
+    /*media (min-width: 992px)*/
+    .col-md-12 {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .navbar-inverse {
+        background-color: #83c443;
+        border-color: #080808;
+    }
+</style>
+<br />
+<center><h2> Trial Information</h2></center>
+
+<div class="container">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" id="Search" placeholder="Search" class="form-control" />
+        </div>
+
+    </div>
+</div>
+<br />
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            Project Code
+        </th>
+        <th>
+            Project Name
+        </th>
+        <th>
+            Owned By
+        </th>
+        <th>
+            Trial Type
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owned_by)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Trial_Type)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Trial_Details", new { id = item.Trial_No })|
+                @Html.ActionLink("Register", "Register", new { id = item.Trial_No })
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    $("#Search").on("keyup", function () {
+        var txtenter = $(this).val();
+        $("table tr").each(function (results) {
+            if (results !== 0) {
+                var id = $(this).find("td:nth-child(2)").text();
+                if (id.indexOf(txtenter) !== 0 && id.toLowerCase().indexOf(txtenter.toLowerCase()) < 0) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            }
+
+        });
+    });
+</script>

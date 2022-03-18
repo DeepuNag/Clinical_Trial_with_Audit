@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PPDModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PPD.dbo.VW_Trial' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_Trial">
+          <Key>
+            <PropertyRef Name="Trial_No" />
+            <PropertyRef Name="Project_Code" />
+            <PropertyRef Name="Owned_by" />
+            <PropertyRef Name="Trial_Type_No" />
+          </Key>
+          <Property Name="Trial_No" Type="int" Nullable="false" />
+          <Property Name="Project_Name" Type="varchar(max)" />
+          <Property Name="Project_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Start_Date" Type="date" />
+          <Property Name="End_Date" Type="date" />
+          <Property Name="Owned_by" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Trial_Type_No" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="Trial_Type" Type="varchar(max)" />
+        </EntityType>
+        <EntityContainer Name="PPDModel1StoreContainer">
+          <EntitySet Name="VW_Trial" EntityType="Self.VW_Trial" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_Trial].[Trial_No] AS [Trial_No], 
+    [VW_Trial].[Project_Name] AS [Project_Name], 
+    [VW_Trial].[Project_Code] AS [Project_Code], 
+    [VW_Trial].[Start_Date] AS [Start_Date], 
+    [VW_Trial].[End_Date] AS [End_Date], 
+    [VW_Trial].[Owned_by] AS [Owned_by], 
+    [VW_Trial].[Trial_Type_No] AS [Trial_Type_No], 
+    [VW_Trial].[description] AS [description], 
+    [VW_Trial].[Trial_Type] AS [Trial_Type]
+    FROM [dbo].[VW_Trial] AS [VW_Trial]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PPDModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="VW_Trial">
+          <Key>
+            <PropertyRef Name="Trial_No" />
+            <PropertyRef Name="Project_Code" />
+            <PropertyRef Name="Owned_by" />
+            <PropertyRef Name="Trial_Type_No" />
+          </Key>
+          <Property Name="Trial_No" Type="Int32" Nullable="false" />
+          <Property Name="Project_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Start_Date" Type="DateTime" Precision="0" />
+          <Property Name="End_Date" Type="DateTime" Precision="0" />
+          <Property Name="Owned_by" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Trial_Type_No" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Trial_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="TrialInfo_Context" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="VW_Trial" EntityType="Self.VW_Trial" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PPDModel1StoreContainer" CdmEntityContainer="TrialInfo_Context">
+          <EntitySetMapping Name="VW_Trial">
+            <EntityTypeMapping TypeName="PPDModel1.VW_Trial">
+              <MappingFragment StoreEntitySet="VW_Trial">
+                <ScalarProperty Name="Trial_No" ColumnName="Trial_No" />
+                <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+                <ScalarProperty Name="Project_Code" ColumnName="Project_Code" />
+                <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+                <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+                <ScalarProperty Name="Owned_by" ColumnName="Owned_by" />
+                <ScalarProperty Name="Trial_Type_No" ColumnName="Trial_Type_No" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Trial_Type" ColumnName="Trial_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
